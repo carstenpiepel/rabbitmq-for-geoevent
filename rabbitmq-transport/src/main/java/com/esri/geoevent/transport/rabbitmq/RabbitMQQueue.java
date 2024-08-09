@@ -70,7 +70,5 @@ public class RabbitMQQueue implements Validatable
   @Override
   public void validate() throws ValidationException
   {
-    if (name == null || name.isEmpty())
-      throw new ValidationException(LOGGER.translate("QUEUE_NAME_VALIDATE_ERROR"));
   }
 }

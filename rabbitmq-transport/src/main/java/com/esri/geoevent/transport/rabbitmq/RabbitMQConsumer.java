@@ -52,10 +52,17 @@ public class RabbitMQConsumer extends RabbitMQConnectionBroker.RabbitMQComponent
   protected synchronized void init() throws RabbitMQTransportException
   {
     super.init();
+
+    String queueName = queue.getName();
     try
     {
-      channel.queueDeclare(queue.getName(), queue.isDurable(), queue.isExclusive(), queue.isAutoDelete(), null);
-      channel.queueBind(queue.getName(), exchange.getName(), exchange.getRoutingKey());
+      if (queueName == null || queueName.isEmpty()) {
+        // Create a temporary/non-durable, exclusive, autodelete queue with a boker-generated name
+        queueName = channel.queueDeclare().getQueue();
+      } else {
+        channel.queueDeclare(queue.getName(), queue.isDurable(), queue.isExclusive(), queue.isAutoDelete(), null);
+      }
+      channel.queueBind(queueName, exchange.getName(), exchange.getRoutingKey());
       channel.basicQos(prefetchCount);
     }
     catch (IOException e)
@@ -67,7 +74,7 @@ public class RabbitMQConsumer extends RabbitMQConnectionBroker.RabbitMQComponent
     try
     {
       consumer = new RabbitMQQueueingConsumer(channel);
-      channel.basicConsume(queue.getName(), true, consumer);
+      channel.basicConsume(queueName, true, consumer);
     }
     catch (IOException e)
     {

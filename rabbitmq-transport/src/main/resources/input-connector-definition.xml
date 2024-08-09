@@ -13,6 +13,7 @@
       <property default="false" label="SSL" name="ssl" source="transport" />
       <property label="RabbitMQ Exchange Name" name="exchangeName" source="transport" />
       <property default="direct" label="RabbitMQ Exchange Type" name="exchangeType" source="transport" />
+      <property default="" label="RabbitMQ Exchange Other Type" name="exchangeOtherType" source="transport" />
       <property default="Transient" label="RabbitMQ Exchange Durability" name="exchangeDurability" source="transport" />
       <property default="true" label="RabbitMQ Exchange Auto delete" name="exchangeAutoDelete" source="transport" />
       <property label="RabbitMQ Queue Name" name="queueName" source="transport" />

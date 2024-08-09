@@ -59,7 +59,10 @@ public class RabbitMQInboundTransportDefinition extends TransportDefinitionBase
       List<LabeledValue> exchangeTypeAllowedValues = new ArrayList<LabeledValue>();
       exchangeTypeAllowedValues.add(new LabeledValue(RabbitMQExchangeType.direct.toString(), RabbitMQExchangeType.direct.toString()));
       exchangeTypeAllowedValues.add(new LabeledValue(RabbitMQExchangeType.fanout.toString(), RabbitMQExchangeType.fanout.toString()));
+      exchangeTypeAllowedValues.add(new LabeledValue(RabbitMQExchangeType.other.toString(), RabbitMQExchangeType.other.toString()));
       propertyDefinitions.put("exchangeType", new PropertyDefinition("exchangeType", PropertyType.String, RabbitMQExchangeType.direct.toString(), "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_EXCHANGE_TYPE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_EXCHANGE_TYPE_DESC}", true, false, exchangeTypeAllowedValues));
+
+      propertyDefinitions.put("exchangeOtherType", new PropertyDefinition("exchangeOtherType", PropertyType.String, null, "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_EXCHANGE_OTHER_TYPE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_EXCHANGE_OTHER_TYPE_DESC}", "exchangeType=other", false, false));
 
       List<LabeledValue> exchangeDurabilityAllowedValues = new ArrayList<LabeledValue>();
       exchangeDurabilityAllowedValues.add(new LabeledValue(RabbitMQDurability.Transient.toString(), RabbitMQDurability.Transient.toString()));
@@ -69,15 +72,15 @@ public class RabbitMQInboundTransportDefinition extends TransportDefinitionBase
       propertyDefinitions.put("exchangeAutoDelete", new PropertyDefinition("exchangeAutoDelete", PropertyType.Boolean, "true", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_EXCHANGE_AUTO_DELETE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_EXCHANGE_AUTO_DELETE_DESC}", true, false));
 
       // Queue properties
-      propertyDefinitions.put("queueName", new PropertyDefinition("queueName", PropertyType.String, null, "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_NAME_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_NAME_DESC}", true, false));
+      propertyDefinitions.put("queueName", new PropertyDefinition("queueName", PropertyType.String, null, "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_NAME_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_NAME_DESC}", false, false));
 
       List<LabeledValue> queueDurabilityAllowedValues = new ArrayList<LabeledValue>();
       queueDurabilityAllowedValues.add(new LabeledValue(RabbitMQDurability.Transient.toString(), RabbitMQDurability.Transient.toString()));
       queueDurabilityAllowedValues.add(new LabeledValue(RabbitMQDurability.Durable.toString(), RabbitMQDurability.Durable.toString()));
-      propertyDefinitions.put("queueDurability", new PropertyDefinition("queueDurability", PropertyType.String, RabbitMQDurability.Transient.toString(), "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_DURABILITY_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_DURABILITY_DESC}", true, false, queueDurabilityAllowedValues));
+      propertyDefinitions.put("queueDurability", new PropertyDefinition("queueDurability", PropertyType.String, RabbitMQDurability.Transient.toString(), "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_DURABILITY_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_DURABILITY_DESC}", false, false, queueDurabilityAllowedValues));
 
-      propertyDefinitions.put("queueExclusive", new PropertyDefinition("queueExclusive", PropertyType.Boolean, "false", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_EXCLUSIVE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_EXCLUSIVE_DESC}", true, false));
-      propertyDefinitions.put("queueAutoDelete", new PropertyDefinition("queueAutoDelete", PropertyType.Boolean, "true", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_AUTO_DELETE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_AUTO_DELETE_DESC}", true, false));
+      propertyDefinitions.put("queueExclusive", new PropertyDefinition("queueExclusive", PropertyType.Boolean, "false", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_EXCLUSIVE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_EXCLUSIVE_DESC}", false, false));
+      propertyDefinitions.put("queueAutoDelete", new PropertyDefinition("queueAutoDelete", PropertyType.Boolean, "true", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_AUTO_DELETE_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QUEUE_AUTO_DELETE_DESC}",false, false));
 
       propertyDefinitions.put("prefetchCount", new PropertyDefinition("prefetchCount", PropertyType.Integer, 1, "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QOS_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_QOS_DESC}", false, false));
       propertyDefinitions.put("routingKey", new PropertyDefinition("routingKey", PropertyType.String, "", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_ROUTING_KEY_LBL}", "${com.esri.geoevent.transport.rabbitmq-transport.TRANSPORT_IN_ROUTING_KEY_DESC}", false, false));

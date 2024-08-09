@@ -33,14 +33,14 @@ import com.esri.ges.util.Validator;
 
 enum RabbitMQExchangeType
 {
-  direct, fanout
+  direct, fanout, other
 }
 
 public class RabbitMQExchange implements Validatable
 {
   private static final BundleLogger LOGGER = BundleLoggerFactory.getLogger(RabbitMQExchange.class);
   private String                    name;
-  private RabbitMQExchangeType      type;
+  private String      type;
   private RabbitMQDurability        durability;
   private boolean                   autoDelete;
   private String                    routingKey;
@@ -48,7 +48,7 @@ public class RabbitMQExchange implements Validatable
   public RabbitMQExchange(String name, String type, String durability, String autoDelete, String routingKey)
   {
     this.name = name;
-    this.type = Validator.valueOfIgnoreCase(RabbitMQExchangeType.class, type, RabbitMQExchangeType.direct);
+    this.type = type;
     this.durability = Validator.valueOfIgnoreCase(RabbitMQDurability.class, durability, RabbitMQDurability.Transient);
     this.autoDelete = Converter.convertToBoolean(autoDelete, true);
     this.routingKey = routingKey;
@@ -59,7 +59,7 @@ public class RabbitMQExchange implements Validatable
     return name;
   }
 
-  public RabbitMQExchangeType getType()
+  public String getType()
   {
     return type;
   }
@@ -83,6 +83,8 @@ public class RabbitMQExchange implements Validatable
   public void validate() throws ValidationException
   {
     if (name == null || name.isEmpty())
+      throw new ValidationException(LOGGER.translate("EXCHANGE_VALIDATE_ERROR"));
+    if (type == null || type.isEmpty())
       throw new ValidationException(LOGGER.translate("EXCHANGE_VALIDATE_ERROR"));
   }
 }

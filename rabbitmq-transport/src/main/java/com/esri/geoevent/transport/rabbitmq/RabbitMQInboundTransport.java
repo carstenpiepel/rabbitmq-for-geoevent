@@ -129,6 +129,10 @@ public class RabbitMQInboundTransport extends InboundTransportBase implements Ru
 
     String exchangeName = getProperty("exchangeName").getValueAsString();
     String exchangeType = getProperty("exchangeType").getValueAsString();
+    String exchangeOtherType = getProperty("exchangeOtherType").getValueAsString();
+    if (exchangeType.equalsIgnoreCase(RabbitMQExchangeType.other.toString())) {
+      exchangeType = getProperty("exchangeOtherType").getValueAsString();
+    }
     String exchangeDurability = getProperty("exchangeDurability").getValueAsString();
     String exchangeAutoDelete = getProperty("exchangeAutoDelete").getValueAsString();
     String routingKey = getProperty("routingKey").getValueAsString();
