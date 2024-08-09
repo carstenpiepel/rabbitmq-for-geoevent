@@ -68,7 +68,7 @@ public class RabbitMQQueue implements Validatable
   }
 
   @Override
-  public void validate() throws ValidationException
+  public void validate()
   {
   }
 }
